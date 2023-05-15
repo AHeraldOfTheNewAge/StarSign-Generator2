@@ -9,7 +9,7 @@
 ## Description:
 A Python program that generates the zodiac sign based on the given command-line argument input
 
-[Video Demo]()
+[Video Demo](https://youtu.be/YLhJUbZcOgM)
 
 ---
 
