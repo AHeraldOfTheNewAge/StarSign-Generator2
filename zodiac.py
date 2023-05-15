@@ -2,23 +2,22 @@ import csv
 import re
 import sys
 
-
 def main():
-    # CHECK FOR THE COMMAND LINE ARGUMENT
-    if len(sys.argv) != 2:
+    if len(sys.argv) != 2: # CHECK FOR THE COMMAND LINE ARGUMENT
         sys.exit("Usage: zodiac.py date")
 
-    # READ THE CSV FILE
-    list = read_csv("./horoscopes.csv")
+    list = read_csv("./horoscopes.csv") # READ THE CSV FILE
 
-    #CHECK FOR THE VALIDITY OF THE COMMAND LINE ARGUMENT
-    if check_input(sys.argv[1]) == False:
+    if check_format(sys.argv[1]) == False:#CHECK FOR THE VALIDITY OF THE COMMAND LINE ARGUMENT
         sys.exit("Format MM/DD")
 
-    if check_format(sys.argv[1]) == False:
+    month, day = sys.argv[1].split("/")
+
+    month = int(month)
+    day = int(day)
+
+    if check_date_validity(month, day) == False:
         sys.exit("Format MM/DD")
-    else:
-        month, day = check_format(sys.argv[1])
 
     # GET THE ZODIAC SIGN
     zodiac = get_zodiac(month, day)
@@ -38,24 +37,22 @@ def read_csv(x):
         return list
 
 
-def check_input(x):
+def check_format(x):
     # CHECK THE VALIDITY OF THE INPUT BASED ON THE REGEX FORMULA
     date = re.search(r"^([0-1]*[0-9]+)\/([0-3]+[0-9]+)$", x)
     if date == None:
         return False
 
 
-def check_format(x):
+def check_date_validity(month, day):
     # CHECK THE VALIDITY OF THE MONTH AND DATE PROVIDED BY THE USER
-    month, day = x.split("/")
-    if int(month) in range(1,13):
-        if int(day) in range(1,32):
-            return int(month), int(day)
-        else:
-            return False
-    else:
+    if month not in range(1,13):
         return False
 
+    if day not in range(1,32):
+        return False
+
+    return True
 
 def get_zodiac(x, y):
     # GET THE ZODIAC NAME ACCORDING TO THE DATES OF EACH ZODIAC SIGN
